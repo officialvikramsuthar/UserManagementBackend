@@ -16,18 +16,22 @@ class RequestLoggingMiddleware:
         return response
 
     def log_request(self, request, response):
-        timestamp = timezone.now()
-        endpoint = request.path
-        ip_address = self.get_client_ip(request)
-        status = response.status_code
+        
+        try:
+            timestamp = timezone.now()
+            endpoint = request.path
+            ip_address = self.get_client_ip(request)
+            status = response.status_code
 
+            RequestLog.objects.using("mongo").create(
+                timestamp=timestamp,
+                endpoint=endpoint,
+                ip_address=ip_address,
+                status=status,
+            )
 
-        RequestLog.objects.using("mongo").create(
-            timestamp=timestamp,
-            endpoint=endpoint,
-            ip_address=ip_address,
-            status=status,
-        )
+        except Exception as e:
+            print("Exception While loggin", e)
 
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
