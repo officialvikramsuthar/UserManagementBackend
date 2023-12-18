@@ -6,7 +6,7 @@ Requirements: Make sure you have the following installed on your machine: PIP Py
 
 Clone the Repository:
 
-git clone https://github.com/yourusername/user-management-project.git cd user-management-project Install Dependencies:
+git clone git@github.com:officialvikramsuthar/UserManagementBackend.git cd user-management-project Install Dependencies:
 
 pip install -r requirements.txt Apply Migrations:
 
